@@ -1,0 +1,42 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug Main Process",
+        "type": "pwa-node",
+        "request": "launch",
+        // point at your local electron binary:
+        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+        "windows": {
+          "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+        },
+        // pass these flags before your app’s entry point (“.”):
+        "args": [
+          "--remote-debugging-port=9222",
+          "."
+        ],
+        "cwd": "${workspaceFolder}",
+        "outputCapture": "std",
+        "env": {
+          "ELECTRON_ENABLE_LOGGING": "true"
+        }
+      },
+      {
+        "name": "Attach to Renderer",
+        "type": "pwa-chrome",
+        "request": "attach",
+        // match the port above
+        "port": 9222,
+        "webRoot": "${workspaceFolder}"
+      }
+    ],
+    "compounds": [
+      {
+        "name": "Launch Electron & Renderer",
+        "configurations": [
+          "Debug Main Process",
+          "Attach to Renderer"
+        ]
+      }
+    ]
+  }
